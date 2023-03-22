@@ -1,0 +1,19 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.26/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindOpenGL.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.26/Templates/CPackConfig.cmake.in
+D:/AIE/test/raylib/cmake/CompileDefinitions.cmake
+D:/AIE/test/raylib/cmake/GlfwImport.cmake
+D:/AIE/test/raylib/cmake/InstallConfigurations.cmake
+D:/AIE/test/raylib/cmake/JoinPaths.cmake
+D:/AIE/test/raylib/cmake/LibraryConfigurations.cmake
+D:/AIE/test/raylib/cmake/LibraryPathToLinkerFlags.cmake
+D:/AIE/test/raylib/cmake/PackConfigurations.cmake
+D:/AIE/test/raylib/cmake/PopulateConfigVariablesLocally.cmake
+D:/AIE/test/raylib/cmake/raylib-config-version.cmake
+D:/AIE/test/raylib/raylib.pc.in
+D:/AIE/test/raylib/src/CMakeLists.txt

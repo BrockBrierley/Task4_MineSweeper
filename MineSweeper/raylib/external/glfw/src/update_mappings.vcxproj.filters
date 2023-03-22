@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\AIE\Assignments\C++\Task4_MineSweeper\MineSweeper\CMakeFiles\f0d5fa55c335c75fad1c6c97392055d9\update_mappings.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\AIE\test\raylib\src\external\glfw\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\AIE\test\raylib\src\external\glfw\src\mappings.h.in">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="D:\AIE\test\raylib\src\external\glfw\CMake\GenerateMappings.cmake" />
+    <None Include="D:\AIE\Assignments\C++\Task4_MineSweeper\MineSweeper\raylib\external\glfw\src\CMakeFiles\update_mappings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{C3F0B0D2-106D-3E0D-8512-75A85BAB5230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{9C55F5AD-98D1-3AB7-B067-AC90D2B4A09C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
