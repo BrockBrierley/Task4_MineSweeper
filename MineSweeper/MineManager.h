@@ -5,8 +5,6 @@ class MineManager
 public:
 	MineManager(int xWidth, int yWidth);
 	void DrawMines();
-
-	Texture2D GetImage();
 protected:
 	int xSize;
 	int ySize;

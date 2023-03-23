@@ -32,12 +32,6 @@ int mineButton::GetNearby()
 	return nearby;
 }
 
-void mineButton::SetManager(MineManager* mineMan)
-{
-	this->mineMan = mineMan;
-}
-
-
 void mineButton::Interact()
 {
 	if (interactable)

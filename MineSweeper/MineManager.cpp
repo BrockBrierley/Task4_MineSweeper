@@ -15,7 +15,7 @@ MineManager::MineManager(int xWidth, int yWidth)
 	{
 		mines[i].SetX(i % xWidth);
 		mines[i].SetY(i / yWidth);
-		mines[i].SetManager(this);
+		//mines[i].SetManager(this);
 	}
 }
 
