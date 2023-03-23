@@ -1,6 +1,7 @@
 #include <iostream>
 #include "raylib.h"
 #include "mineButton.h";
+#include "MineManager.h";
 
 int main()
 {
@@ -9,15 +10,15 @@ int main()
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "MineSweeper");
 
 	SetTargetFPS(60);
-
-	mineButton button;
+	//SetUp MineManager
+	MineManager manager(10, 10);
 
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(WHITE);
 
-		button.Draw();
+		manager.DrawMines();
 
 		EndDrawing();
 	}

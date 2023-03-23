@@ -3,8 +3,6 @@
 button::button()
 {
 	interactable = true;
-	this->x = 0;
-	this->y = 0;
 }
 
 void button::Interact()
@@ -15,16 +13,14 @@ void button::Interact()
 
 void button::SetPosition(int newX, int newY)
 {
-	x = newX;
-	y = newY;
 }
 
 int button::GetXPos()
 {
-	return x;
+	return 0;
 }
 
 int button::GetYPos()
 {
-	return y;
+	return 0;
 }

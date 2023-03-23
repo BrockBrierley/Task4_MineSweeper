@@ -3,15 +3,18 @@
 
 mineButton::mineButton()
 {
-	this->x = 10;
-	this->y = 10;
-	pos.x = x;
-	pos.y = y;
-	counter = 0;
-	buttonImage = LoadTexture("ArtAssets/Unknown_Unpressed_Button.png");
-	pressedImage = LoadTexture("ArtAssets/Unknown_Pressed_Button.png");
+	
 }
 
+void mineButton::SetX(int x)
+{
+	pos.x = x*64;
+}
+
+void mineButton::SetY(int y)
+{
+	pos.y = y*64;
+}
 
 
 void mineButton::ArmBomb()
@@ -29,21 +32,9 @@ int mineButton::GetNearby()
 	return nearby;
 }
 
-void mineButton::Draw()
+void mineButton::SetManager(MineManager* mineMan)
 {
-	counter++;
-	if (counter < 60)
-	{
-		DrawTextureEx(buttonImage, pos,0.0f, 0.5f, WHITE);
-	}
-	else if (counter >= 70)
-	{
-		counter = 0;
-	}
-	else
-	{
-		DrawTextureEx(pressedImage, pos, 0.0f, 0.5f, WHITE);
-	}
+	this->mineMan = mineMan;
 }
 
 
@@ -72,4 +63,10 @@ void mineButton::Reveal()
 void mineButton::Explode()
 {
 	//destroy all other mines
+}
+
+
+void mineButton::Draw(Texture2D normal)
+{
+	DrawTextureEx(normal, pos, 0.0f, 0.5f, WHITE);
 }

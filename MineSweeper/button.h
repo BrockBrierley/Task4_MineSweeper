@@ -11,12 +11,9 @@ public:
 	int GetYPos();
 protected:
 	int counter;
+	int buttonWidth = 64;
 	bool interactable;
-	int x;
-	int y;
 	Vector2 pos;
-	Texture2D buttonImage;
-	Texture2D pressedImage;
 private:
 };
 
