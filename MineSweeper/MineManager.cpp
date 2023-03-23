@@ -13,25 +13,27 @@ MineManager::MineManager(int xWidth, int yWidth)
 
 	for (int i = 0; i < total; i++)
 	{
-		mines[i].SetX(i % xWidth);
-		mines[i].SetY(i / yWidth);
-		//mines[i].SetManager(this);
+		mines[i].SetX((i % xWidth)*buttonSize);
+		mines[i].SetY((i / yWidth)*buttonSize);
 	}
-}
+}                                                                                                                                                                      
 
 void MineManager::DrawMines()
 {
 	for (int i = 0; i < total; i++)
 	{
-		if (i % 4 == 0)
-		{
-			mines[i].Draw(pressedImage);
-		}
-		else
-		{
-			mines[i].Draw(buttonImage);
-		}
+		mines[i].Draw(buttonImage, pressedImage);
 	}
+}
+
+void MineManager::PressButton(int index)
+{
+	mines[index].Interact();
+}
+
+void MineManager::RightClick(int index)
+{
+	mines[index].Flag();
 }
 
 
