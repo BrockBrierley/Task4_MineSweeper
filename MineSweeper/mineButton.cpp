@@ -1,25 +1,32 @@
 #include "mineButton.h"
-
+#include "MineManager.h"
 
 mineButton::mineButton()
 {
 	
 }
 
-void mineButton::SetX(int x)
+void mineButton::SetX(int xPos, int x)
 {
-	pos.x = x;
+	pos.x = xPos;
+	xArrayPos = x;
 }
 
-void mineButton::SetY(int y)
+void mineButton::SetY(int yPos, int y)
 {
-	pos.y = y;
+	pos.y = yPos;
+	yArrayPos = y;
 }
 
 
 void mineButton::ArmBomb()
 {
 	mine = true;
+}
+
+void mineButton::DisarmBomb()
+{
+	mine = false;
 }
 
 void mineButton::SetNearbyMines(int numOfMines)
@@ -32,14 +39,6 @@ int mineButton::GetNearby()
 	return nearby;
 }
 
-void mineButton::Interact()
-{
-	if (interactable)
-	{
-		interactable = false;
-	}
-}
-
 void mineButton::Flag()
 {
 	if (flagged)
@@ -47,48 +46,71 @@ void mineButton::Flag()
 		flagged = false;
 		interactable = true;
 	}
-	else if (!flagged && !interactable)
-	{
-
-	}
-	else
+	else if (!flagged && interactable)
 	{
 		flagged = true;
 		interactable = false;
 	}
 }
 
-void mineButton::Reveal()
+void mineButton::Interact(MineManager* manager)
 {
-	if (mine)
+	if (interactable)
 	{
-		Explode();
-		//mineManager.Explode(x, y);
-	}
-	else
-	{
-		//ShowNumber
+		interactable = false;
+		revealed = true;
+
+		if (mine)
+		{
+			Explode();
+			//mineManager.Explode(x, y);
+		}
+		else
+		{
+			if (nearby == 0)
+			{
+				manager->ClearNearby(xArrayPos, yArrayPos);
+			}
+			/*if nearby = 0
+	*			mineManager.RevealNearby(x, y)
+	*
+	*
+	* */
+		}
 	}
 }
 
-void mineButton::Explode()
+void mineButton::Explode() 
 {
-	//destroy all other mines
+	//Play Sound
 }
 
-
-void mineButton::Draw(Texture2D normal, Texture2D pressed )
+void mineButton::Draw(MineManager* manager)
 {
-	if (flagged)
+	if (mine && revealed)
 	{
-		DrawTextureEx(pressed, pos, 0.0f, 0.5f, WHITE);
+		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, 1.0f, WHITE);
 	}
-	else if (interactable)
+	else if (flagged)
 	{
-		DrawTextureEx(normal, pos, 0.0f, 0.5f, WHITE);
+		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, 1.0f, WHITE);
+	}
+	else if (revealed)
+	{
+		DrawTextureEx(manager->GetImage(nearby), pos, 0.0f, 1.0f, WHITE);
 	}
 	else
 	{
-		DrawTextureEx(pressed, pos, 0.0f, 0.5f, WHITE);
+		DrawTextureEx(manager->GetBasicButton(), pos, 0.0f, 1.0f, WHITE);
 	}
+}
+
+bool mineButton::IsMine()
+{
+	return mine;
+}
+
+bool mineButton::IsFlagged()
+{
+	return flagged;
 }

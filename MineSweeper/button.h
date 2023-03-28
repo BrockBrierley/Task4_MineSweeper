@@ -12,8 +12,9 @@ public:
 protected:
 	int counter;
 	int buttonWidth = 64;
-	bool interactable;
+	bool interactable = true;
 	Vector2 pos;
 private:
 };
+
 
