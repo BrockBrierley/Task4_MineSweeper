@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "mineButton.h"
+#include "Timer.h"
 
 class MineManager
 {
@@ -31,6 +32,8 @@ protected:
 	mineButton* mines;
 	bool alive = true;
 	bool firsClick = true;
+	Timer timer;
+	void DrawTimer();
 
 	//textures to load in manager, so they are not loaded for every mine
 	Texture2D buttonImage;

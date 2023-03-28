@@ -87,8 +87,17 @@ void MineManager::CheckResetButtonRelease(int x, int y)
 
 void MineManager::Draw()
 {
+	DrawTimer();
 	DrawResetImage();
 	DrawMines();
+}
+
+void MineManager::DrawTimer()
+{
+	DrawRectangle(10, 10, 400, 100, BLACK);
+	int currentTime = timer.GetTime();
+	DrawText(TextFormat("%05i", currentTime), 100, 17, 100, RED);
+	
 }
 
 void MineManager::SetNearby()
@@ -231,6 +240,7 @@ void MineManager::PressButton(int index)
 	{
 		if (mines[index].IsMine() && firsClick)
 		{
+			timer.StartTimer();
 			mines[index].DisarmBomb();
 			mines[0].ArmBomb();
 			SetNearby();
@@ -238,6 +248,11 @@ void MineManager::PressButton(int index)
 		else if(mines[index].IsMine() && !mines[index].IsFlagged())
 		{
 			alive = false;
+			timer.StopTimer();
+		}
+		else if (firsClick)
+		{
+			timer.StartTimer();
 		}
 		firsClick = false;
 		mines[index].Interact(this);
@@ -315,7 +330,6 @@ void MineManager::ArmBombs()
 void MineManager::Reset()
 {
 	resetImage = &ResetImage_Alive_Unpressed;
-	//Timer.Reset();
 	alive = true;
 	for (int i = 0; i < total; i++)
 	{
@@ -324,6 +338,7 @@ void MineManager::Reset()
 	firsClick = true;
 	ArmBombs();
 	SetNearby();
+	timer.ResetTimer();
 }
 
 

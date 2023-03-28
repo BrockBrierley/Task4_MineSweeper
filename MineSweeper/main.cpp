@@ -6,7 +6,6 @@
 void Update(MineManager* manager, int mineX, int mineY);
 void Draw(MineManager* manager);
 
-
 int main()
 {
 	const int WINDOW_WIDTH = 1024;
