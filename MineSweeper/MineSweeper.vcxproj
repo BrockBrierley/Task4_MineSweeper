@@ -131,6 +131,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mineButton.cpp" />
+    <ClCompile Include="MineManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mineButton.h" />
+    <ClInclude Include="MineManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
