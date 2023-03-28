@@ -108,3 +108,12 @@ bool mineButton::IsFlagged()
 {
 	return flagged;
 }
+
+void mineButton::Reset()
+{
+	mine = false;
+	flagged = false;
+	nearby = 0;
+	interactable = true;
+	revealed = false;
+}

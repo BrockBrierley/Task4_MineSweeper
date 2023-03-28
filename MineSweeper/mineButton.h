@@ -1,4 +1,5 @@
 #pragma once
+#include "raylib.h"
 
 class mineButton
 {
@@ -15,13 +16,14 @@ public:
 	void Draw(class MineManager* manager);
 	bool IsMine();
 	bool IsFlagged();
+	void Reset();
 
 protected:
 	int nearby = 0;
 	bool mine = false;
 	bool revealed = false;
 	void Explode();
-	bool interactable = false;
+	bool interactable = true;
 	bool flagged = false;
 	int xArrayPos = 0;
 	int yArrayPos = 0;

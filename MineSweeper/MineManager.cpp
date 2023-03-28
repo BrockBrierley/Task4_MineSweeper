@@ -20,6 +20,17 @@ MineManager::MineManager(int xWidth, int yWidth)
 	SevenImage = LoadTexture("ArtAssets/7_Button.png");
 	EightImage = LoadTexture("ArtAssets/8_Button.png");
 
+	//LoadResetButton Images
+
+	ResetImage_Alive_Unpressed = LoadTexture("ArtAssets/HappyUnpressed.png");;
+	ResetImage_Alive_Pressed = LoadTexture("ArtAssets/HappyPressed.png");;
+	ResetImage_Dead_Unpressed = LoadTexture("ArtAssets/DeadUnpressed.png");;
+	ResetImage_Dead_Pressed = LoadTexture("ArtAssets/DeadPressed.png");;
+
+	resetImage = &ResetImage_Alive_Unpressed;
+	resetPos.x = ((1024 / 2) - 32);
+	resetPos.y = 10;
+
 	xSize = xWidth;
 	ySize = yWidth;
 	total = xWidth * yWidth;
@@ -31,22 +42,54 @@ MineManager::MineManager(int xWidth, int yWidth)
 		mines[i].SetX( ((i % xWidth)*buttonSize), i % xSize);
 		mines[i].SetY( ((i / xWidth)*buttonSize) + 2 * buttonSize, i / xSize);
 	}
-	//srand(time(nullptr));
-	for (int i = 0; i < numOfMines; i++)
-	{
-		//get a random number between 0 and the total, excluding the total
-		//minus 1 before the % and plus 1 after the to ensure mines are not places in the 0 slot which is the failsafe
-		//point if the user clicks on a mine
-		int randomNum = (rand() % (total - 1)) + 1;
-		//rerun if the position already contains a mine
-		while (mines[randomNum].IsMine())
-		{
-			randomNum = (rand() % (total - 1)) + 1;
-		}
-		mines[randomNum].ArmBomb();
-	}
+	ArmBombs();
 	SetNearby();
 }    
+
+
+void MineManager::DrawResetImage()
+{
+	DrawTextureEx((*resetImage), resetPos, 0.0f, 1.0f, WHITE);
+}
+
+void MineManager::CheckResetButtonPress(int x, int y)
+{
+	if (x > (1024 / 2) - 32 && x < (1024 / 2) + 32 && y > 10 && y < 64)
+	{
+		if (alive)
+		{
+			resetImage = &ResetImage_Alive_Pressed;
+		}
+		else
+		{
+			resetImage = &ResetImage_Dead_Pressed;
+		}
+
+	}
+}
+
+void MineManager::CheckResetButtonRelease(int x, int y)
+{
+	if (alive)
+	{
+		resetImage = &ResetImage_Alive_Unpressed;
+	}
+	else
+	{
+		resetImage = &ResetImage_Dead_Unpressed;
+	}
+
+	if (x > (1024 / 2) - 32 && x < (1024 / 2) + 32 && y > 0 && y < 64)
+	{
+		Reset();
+	}
+}
+
+void MineManager::Draw()
+{
+	DrawResetImage();
+	DrawMines();
+}
 
 void MineManager::SetNearby()
 {
@@ -174,7 +217,6 @@ void MineManager::ClearNearby(int x, int y)
 	}
 }
 
-
 void MineManager::DrawMines()
 {
 	for (int i = 0; i < total; i++)
@@ -251,6 +293,37 @@ Texture2D MineManager::GetFlaggedButton()
 Texture2D MineManager::GetBombedButton()
 {
 	return BombedImage;
+}
+
+void MineManager::ArmBombs()
+{
+	for (int i = 0; i < numOfMines; i++)
+	{
+		//get a random number between 0 and the total, excluding the total
+		//minus 1 before the % and plus 1 after the to ensure mines are not places in the 0 slot which is the failsafe
+		//point if the user clicks on a mine
+		int randomNum = (rand() % (total - 1)) + 1;
+		//rerun if the position already contains a mine
+		while (mines[randomNum].IsMine())
+		{
+			randomNum = (rand() % (total - 1)) + 1;
+		}
+		mines[randomNum].ArmBomb();
+	}
+}
+
+void MineManager::Reset()
+{
+	resetImage = &ResetImage_Alive_Unpressed;
+	//Timer.Reset();
+	alive = true;
+	for (int i = 0; i < total; i++)
+	{
+		mines[i].Reset();
+	}
+	firsClick = true;
+	ArmBombs();
+	SetNearby();
 }
 
 

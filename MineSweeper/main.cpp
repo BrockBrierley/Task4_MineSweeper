@@ -48,12 +48,13 @@ void Update(MineManager* manager, int mineX, int mineY)
 		int index = (rowIndex * mineX) + colIndex;
 		manager->PressButton(index);
 
-		//manager.CheckResetButton(mouseX, mouseY)
+		manager->CheckResetButtonPress(mousePos.x, mousePos.y);
 	}
 
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 	{
-		//manager.releaseButton(mouseX, mouseY);
+		Vector2 mousePos = GetMousePosition();
+		manager->CheckResetButtonRelease(mousePos.x, mousePos.y);
 	}
 
 
@@ -73,7 +74,7 @@ void Draw(MineManager* manager)
 	BeginDrawing();
 	ClearBackground(RAYWHITE);
 
-	manager->DrawMines();
+	manager->Draw();
 
 	EndDrawing();
 }
