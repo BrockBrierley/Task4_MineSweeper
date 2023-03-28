@@ -3,10 +3,7 @@
 
 MineManager::MineManager(int xWidth, int yWidth)
 {
-	button resetButton;
-
-
-	numOfMines = 40;
+	numOfMines = 30;
 	//load Basic Images
 	buttonImage = LoadTexture("ArtAssets/Unknown_Unpressed_Button.png");
 	FlaggedImage = LoadTexture("ArtAssets/Flagged_Button.png");

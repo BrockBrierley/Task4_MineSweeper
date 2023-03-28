@@ -63,7 +63,6 @@ void mineButton::Interact(MineManager* manager)
 		if (mine)
 		{
 			Explode();
-			//mineManager.Explode(x, y);
 		}
 		else
 		{
@@ -71,11 +70,6 @@ void mineButton::Interact(MineManager* manager)
 			{
 				manager->ClearNearby(xArrayPos, yArrayPos);
 			}
-			/*if nearby = 0
-	*			mineManager.RevealNearby(x, y)
-	*
-	*
-	* */
 		}
 	}
 }

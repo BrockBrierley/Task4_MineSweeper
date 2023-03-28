@@ -34,6 +34,7 @@ void Update(MineManager* manager, int mineX, int mineY)
 	{
 		Vector2 mousePos = GetMousePosition();
 		int rowIndex = 0;
+		//added due to clicking above the minesweeper game could still interact with tiles below within 1 tile.
 		if ((mousePos.y - (2 * 64)) > 0)
 		{
 			rowIndex = (mousePos.y - 2 * 64) / 64;
@@ -46,7 +47,15 @@ void Update(MineManager* manager, int mineX, int mineY)
 
 		int index = (rowIndex * mineX) + colIndex;
 		manager->PressButton(index);
+
+		//manager.CheckResetButton(mouseX, mouseY)
 	}
+
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+	{
+		//manager.releaseButton(mouseX, mouseY);
+	}
+
 
 	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
 	{
@@ -62,7 +71,7 @@ void Update(MineManager* manager, int mineX, int mineY)
 void Draw(MineManager* manager)
 {
 	BeginDrawing();
-	ClearBackground(GREEN);
+	ClearBackground(RAYWHITE);
 
 	manager->DrawMines();
 

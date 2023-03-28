@@ -1,7 +1,6 @@
 #pragma once
-#include "button.h"
 
-class mineButton: public button
+class mineButton
 {
 public:
 	mineButton();
@@ -22,9 +21,11 @@ protected:
 	bool mine = false;
 	bool revealed = false;
 	void Explode();
+	bool interactable = false;
 	bool flagged = false;
-	int xArrayPos;
-	int yArrayPos;
+	int xArrayPos = 0;
+	int yArrayPos = 0;
+	Vector2 pos;
 private:
 };
 
