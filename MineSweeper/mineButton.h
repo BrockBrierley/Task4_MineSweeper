@@ -6,7 +6,7 @@ class mineButton
 public:
 	mineButton();
 	~mineButton();
-	void Interact(class MineManager* manager);
+	bool Interact(class MineManager* manager);
 	void Flag();
 	void ArmBomb();
 	void DisarmBomb();

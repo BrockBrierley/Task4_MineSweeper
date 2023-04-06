@@ -7,7 +7,7 @@ MineManager::MineManager(int gap, int difficulty)
 	//set the number of mines
 	if (difficulty == 0)
 	{
-		numOfMines = 10;
+		numOfMines = 3;
 		xSize = 8;
 		ySize = 7;
 		buttonSize *= 2;
@@ -65,6 +65,8 @@ MineManager::MineManager(int gap, int difficulty)
 
 	total = xSize * ySize;
 
+	winCount = total - numOfMines;
+
 	mines = new mineButton[total];
 
 	for (int i = 0; i < total; i++)
@@ -72,6 +74,8 @@ MineManager::MineManager(int gap, int difficulty)
 		mines[i].SetX( ((i % xSize)*buttonSize), i % xSize);
 		mines[i].SetY( ((i / xSize)*buttonSize) + topGap, i / xSize);
 	}
+
+
 	ArmBombs();
 	SetNearby();
 }    
@@ -251,7 +255,10 @@ void MineManager::ClearNearby(int x, int y)
 		for (int xNearby = startingX; xNearby <= endingX; xNearby++)
 		{
 			int index = ((y + yNearby) * xSize) + (x + xNearby);
-			mines[index].Interact(this);
+			if (mines[index].Interact(this))
+			{
+				winCounter++;
+			}
 		}
 	}
 }
@@ -285,7 +292,16 @@ void MineManager::PressButton(int index)
 			timer.StartTimer();
 		}
 		firsClick = false;
-		mines[index].Interact(this);
+		if (mines[index].Interact(this))
+		{
+			winCounter++;
+			std::cout << winCounter << " != " << winCount << std::endl;
+		}
+	}
+
+	if (alive && winCounter == winCount)
+	{
+		timer.StopTimer();
 	}
 }
 
@@ -403,6 +419,7 @@ void MineManager::Reset()
 		mines[i].Reset();
 	}
 	firsClick = true;
+	winCounter = 0;
 	ArmBombs();
 	SetNearby();
 	timer.ResetTimer();

@@ -38,6 +38,9 @@ protected:
 	void DrawTimer();
 	int topGap;
 
+	int winCount = -1;
+	int winCounter = 0;
+
 	float imageSizeMultiplyer = 1;
 
 	//textures to load in manager, so they are not loaded for every mine

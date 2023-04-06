@@ -57,7 +57,7 @@ void mineButton::Flag()
 	}
 }
 
-void mineButton::Interact(MineManager* manager)
+bool mineButton::Interact(MineManager* manager)
 {
 	if (interactable)
 	{
@@ -67,6 +67,7 @@ void mineButton::Interact(MineManager* manager)
 		if (mine)
 		{
 			Explode();
+			return false;
 		}
 		else
 		{
@@ -74,6 +75,7 @@ void mineButton::Interact(MineManager* manager)
 			{
 				manager->ClearNearby(xArrayPos, yArrayPos);
 			}
+			return true;
 		}
 	}
 }
