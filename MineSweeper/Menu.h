@@ -7,7 +7,8 @@ public:
 	Menu();
 	~Menu();
 	void Draw();
-	int click(int mouseX, int mousY);
+	void click(int mouseX, int mousY);
+	int release(int mouseX, int mouseY);
 protected:
 private:
 	Texture2D Title;

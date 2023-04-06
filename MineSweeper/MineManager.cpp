@@ -7,7 +7,7 @@ MineManager::MineManager(int gap, int difficulty)
 	//set the number of mines
 	if (difficulty == 0)
 	{
-		numOfMines = 3;
+		numOfMines = 8;
 		xSize = 8;
 		ySize = 7;
 		buttonSize *= 2;
@@ -22,7 +22,7 @@ MineManager::MineManager(int gap, int difficulty)
 	}
 	else if (difficulty == 2)
 	{
-		numOfMines = 60;
+		numOfMines = 150;
 		xSize = 32;
 		ySize = 28;
 		buttonSize /= 2;

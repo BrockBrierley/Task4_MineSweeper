@@ -5,11 +5,13 @@
 #include "Menu.h";
 
 void Update(MineManager* manager);
+void Update(Menu* menu);
 void Draw(MineManager* manager);
 void Draw(Menu* menu);
 
 const int TOP_GAP = 124;
 bool menuActive = true;
+int difficulty = 1;
 
 int main()
 {
@@ -17,23 +19,24 @@ int main()
 	const int WINDOW_WIDTH = 1024;
 	const int WINDOW_HEIGHT = 1024;
 
-	const int EASY = 0;
-	const int MEDIUM = 1;
-	const int HARD = 2;
-
 
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "MineSweeper");
 
 	SetTargetFPS(60);
 	//SetUp MineManager
-	MineManager* manager = new MineManager(TOP_GAP, MEDIUM);
+	MineManager* manager = nullptr;// = new MineManager(TOP_GAP, MEDIUM);
 	Menu* menu = new Menu();
 
 	while (!WindowShouldClose())
 	{
 		if (menuActive)
 		{
+			Update(menu);
 			Draw(menu);
+		}
+		else if (!menuActive && manager == nullptr)
+		{
+			manager = new MineManager(TOP_GAP, difficulty);
 		}
 		else
 		{
@@ -42,9 +45,6 @@ int main()
 		}
 	}
 }
-
-
-
 
 void Update(MineManager* manager)
 {
@@ -71,6 +71,30 @@ void Update(MineManager* manager)
 		manager->RightClick(mousePos.x, mousePos.y);
 	}
 }
+
+void Update(Menu* menu)
+{
+	int releaseNum = -1;
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+	{
+		Vector2 mousePos = GetMousePosition();
+
+		menu->click(mousePos.x, mousePos.y);
+	}
+
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+	{
+		Vector2 mousePos = GetMousePosition();
+		releaseNum = menu->release(mousePos.x, mousePos.y);
+	}
+
+	if (releaseNum >= 0)
+	{
+		difficulty = releaseNum;
+		menuActive = false;
+	}
+}
+
 
 void Draw(MineManager* manager)
 {
