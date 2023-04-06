@@ -1,15 +1,18 @@
 #pragma once
 #include "raylib.h"
 #include "mineButton.h"
+#include "Timer.h"
 
 class MineManager
 {
 public:
-	MineManager(int xWidth, int yWidth);
+	MineManager( int topGap, int difficulty);
+	~MineManager();
 	void DrawMines();
 	void Draw();
 	void PressButton(int Index);
-	void RightClick(int Index);
+	void PressButton(int mouseX, int mouseY);
+	void RightClick(int mouseX, int mouseY);
 	void ClearNearby(int x, int y);
 	void DrawResetImage();
 	void CheckResetButtonPress(int x, int y);
@@ -31,6 +34,16 @@ protected:
 	mineButton* mines;
 	bool alive = true;
 	bool firsClick = true;
+	Timer timer;
+	void DrawTimer();
+	void DrawFlagCounter();
+	int topGap;
+
+	int winCount = -1;
+	int winCounter = 0;
+	int flagCounter = 0;
+
+	float imageSizeMultiplyer = 1;
 
 	//textures to load in manager, so they are not loaded for every mine
 	Texture2D buttonImage;

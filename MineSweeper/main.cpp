@@ -3,69 +3,74 @@
 #include "mineButton.h";
 #include "MineManager.h";
 
-void Update(MineManager* manager, int mineX, int mineY);
+void Update(MineManager* manager);
 void Draw(MineManager* manager);
 
+const int TOP_GAP = 124;
+bool menu = false;
 
 int main()
 {
+
 	const int WINDOW_WIDTH = 1024;
 	const int WINDOW_HEIGHT = 1024;
 
-	int mineFieldWidth = 16;
-	int mineFieldHeight = 14;
+	const int EASY = 0;
+	const int MEDIUM = 1;
+	const int HARD = 2;
+
 
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "MineSweeper");
 
 	SetTargetFPS(60);
 	//SetUp MineManager
-	MineManager manager(mineFieldWidth, mineFieldHeight);
+	MineManager* manager = new MineManager(TOP_GAP, MEDIUM);
 
 	while (!WindowShouldClose())
 	{
-		Update(&manager, mineFieldWidth, mineFieldWidth);
-		Draw(&manager);
-	}
-}
-
-void Update(MineManager* manager, int mineX, int mineY)
-{
-	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-	{
-		Vector2 mousePos = GetMousePosition();
-		int rowIndex = 0;
-		//added due to clicking above the minesweeper game could still interact with tiles below within 1 tile.
-		if ((mousePos.y - (2 * 64)) > 0)
+		if (menu)
 		{
-			rowIndex = (mousePos.y - 2 * 64) / 64;
+			//ShowMenu
+			//create Manager
+			//manager = new MineManager(TOP_GAP, MEDIUM);
 		}
 		else
 		{
-			rowIndex = -1;
+			Update(manager);
+			Draw(manager);
 		}
-		int colIndex = mousePos.x / 64;
-
-		int index = (rowIndex * mineX) + colIndex;
-		manager->PressButton(index);
-
-		manager->CheckResetButtonPress(mousePos.x, mousePos.y);
 	}
+}
 
-	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+void Update(MineManager* manager)
+{
+	if (menu)
 	{
-		Vector2 mousePos = GetMousePosition();
-		manager->CheckResetButtonRelease(mousePos.x, mousePos.y);
+
 	}
-
-
-	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+	else
 	{
-		Vector2 mousePos = GetMousePosition();
-		int rowIndex = (mousePos.y - 2 * 64) / 64;
-		int colIndex = mousePos.x / 64;
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			Vector2 mousePos = GetMousePosition();
 
-		int index = (rowIndex * mineX) + colIndex;
-		manager->RightClick(index);
+			manager->PressButton(mousePos.x, mousePos.y);
+
+			manager->CheckResetButtonPress(mousePos.x, mousePos.y);
+		}
+
+		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			Vector2 mousePos = GetMousePosition();
+			manager->CheckResetButtonRelease(mousePos.x, mousePos.y);
+		}
+
+
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			Vector2 mousePos = GetMousePosition();
+			manager->RightClick(mousePos.x, mousePos.y);
+		}
 	}
 }
 

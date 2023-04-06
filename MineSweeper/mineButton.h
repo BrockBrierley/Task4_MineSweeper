@@ -5,15 +5,16 @@ class mineButton
 {
 public:
 	mineButton();
-	void Interact(class MineManager* manager);
-	void Flag();
+	~mineButton();
+	bool Interact(class MineManager* manager);
+	bool Flag();
 	void ArmBomb();
 	void DisarmBomb();
 	void SetNearbyMines(int numOfMines);
 	int GetNearby();
 	void SetX(int xPos, int x);
 	void SetY(int yPos, int y);
-	void Draw(class MineManager* manager);
+	void Draw(class MineManager* manager, float imageSizeMultiplyer);
 	bool IsMine();
 	bool IsFlagged();
 	void Reset();

@@ -6,6 +6,10 @@ mineButton::mineButton()
 	
 }
 
+mineButton::~mineButton()
+{
+}
+
 void mineButton::SetX(int xPos, int x)
 {
 	pos.x = xPos;
@@ -39,21 +43,23 @@ int mineButton::GetNearby()
 	return nearby;
 }
 
-void mineButton::Flag()
+bool mineButton::Flag()
 {
 	if (flagged)
 	{
 		flagged = false;
 		interactable = true;
+		return false;
 	}
 	else if (!flagged && interactable)
 	{
 		flagged = true;
 		interactable = false;
+		return true;
 	}
 }
 
-void mineButton::Interact(MineManager* manager)
+bool mineButton::Interact(MineManager* manager)
 {
 	if (interactable)
 	{
@@ -63,6 +69,7 @@ void mineButton::Interact(MineManager* manager)
 		if (mine)
 		{
 			Explode();
+			return false;
 		}
 		else
 		{
@@ -70,6 +77,7 @@ void mineButton::Interact(MineManager* manager)
 			{
 				manager->ClearNearby(xArrayPos, yArrayPos);
 			}
+			return true;
 		}
 	}
 }
@@ -79,23 +87,23 @@ void mineButton::Explode()
 	//Play Sound
 }
 
-void mineButton::Draw(MineManager* manager)
+void mineButton::Draw(MineManager* manager, float imageSizeMultiplyer)
 {
 	if (mine && revealed)
 	{
-		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else if (flagged)
 	{
-		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else if (revealed)
 	{
-		DrawTextureEx(manager->GetImage(nearby), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetImage(nearby), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else
 	{
-		DrawTextureEx(manager->GetBasicButton(), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetBasicButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 }
 
