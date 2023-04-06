@@ -302,7 +302,6 @@ void MineManager::PressButton(int index)
 		if (mines[index].Interact(this))
 		{
 			winCounter++;
-			std::cout << winCounter << " != " << winCount << std::endl;
 		}
 	}
 
