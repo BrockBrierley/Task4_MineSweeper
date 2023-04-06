@@ -1,9 +1,41 @@
 #include "MineManager.h"
 #include <iostream>
 
-MineManager::MineManager(int xWidth, int yWidth)
+MineManager::MineManager(int gap, int difficulty)
 {
-	numOfMines = 30;
+	topGap = gap;
+	//set the number of mines
+	if (difficulty == 0)
+	{
+		numOfMines = 10;
+		xSize = 8;
+		ySize = 7;
+		buttonSize *= 2;
+		imageSizeMultiplyer = 2;
+	}
+	else if (difficulty == 1)
+	{
+		numOfMines = 30;
+		xSize = 16;
+		ySize = 14;
+		imageSizeMultiplyer = 1;
+	}
+	else if (difficulty == 2)
+	{
+		numOfMines = 60;
+		xSize = 32;
+		ySize = 28;
+		buttonSize /= 2;
+		imageSizeMultiplyer = 0.5f;
+	}
+	//default if there is an unchecked number input
+	else
+	{
+		numOfMines = 30;
+		xSize = 16;
+		ySize = 14;
+	}
+
 	//load Basic Images
 	buttonImage = LoadTexture("ArtAssets/Unknown_Unpressed_Button.png");
 	FlaggedImage = LoadTexture("ArtAssets/Flagged_Button.png");
@@ -31,16 +63,14 @@ MineManager::MineManager(int xWidth, int yWidth)
 	resetPos.x = ((1024 / 2) - 32);
 	resetPos.y = 10;
 
-	xSize = xWidth;
-	ySize = yWidth;
-	total = xWidth * yWidth;
+	total = xSize * ySize;
 
 	mines = new mineButton[total];
 
 	for (int i = 0; i < total; i++)
 	{
-		mines[i].SetX( ((i % xWidth)*buttonSize), i % xSize);
-		mines[i].SetY( ((i / xWidth)*buttonSize) + 2 * buttonSize, i / xSize);
+		mines[i].SetX( ((i % xSize)*buttonSize), i % xSize);
+		mines[i].SetY( ((i / xSize)*buttonSize) + topGap, i / xSize);
 	}
 	ArmBombs();
 	SetNearby();
@@ -230,7 +260,7 @@ void MineManager::DrawMines()
 {
 	for (int i = 0; i < total; i++)
 	{
-		mines[i].Draw(this);
+		mines[i].Draw(this, imageSizeMultiplyer);
 	}
 }
 
@@ -259,8 +289,45 @@ void MineManager::PressButton(int index)
 	}
 }
 
-void MineManager::RightClick(int index)
+void MineManager::PressButton(int mouseX, int mouseY)
 {
+	int rowIndex = 0;
+	//added due to clicking above the minesweeper game could still interact with tiles below within 1 tile.
+	if ((mouseY - (topGap)) > 0)
+	{
+		rowIndex = (mouseY - topGap) / buttonSize;
+	}
+	else
+	{
+		rowIndex = -1;
+	}
+
+	int colIndex = mouseX / buttonSize;
+
+	int index = (rowIndex * xSize) + colIndex;
+
+	PressButton(index);
+
+}
+
+void MineManager::RightClick(int mouseX, int mouseY)
+{
+	int rowIndex = 0;
+
+	if ((mouseY - (topGap)) > 0)
+	{
+		rowIndex = (mouseY - topGap) / buttonSize;
+	}
+	else
+	{
+		rowIndex = -1;
+	}
+
+	int colIndex = mouseX / buttonSize;
+
+	int index = (rowIndex * xSize) + colIndex;
+
+
 	if (index >= 0 && index < total && alive)
 	{
 		mines[index].Flag();
@@ -339,6 +406,12 @@ void MineManager::Reset()
 	ArmBombs();
 	SetNearby();
 	timer.ResetTimer();
+}
+
+MineManager::~MineManager()
+{
+	//delete mines;
+	//delete resetImage;
 }
 
 

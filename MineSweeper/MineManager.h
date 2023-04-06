@@ -6,11 +6,13 @@
 class MineManager
 {
 public:
-	MineManager(int xWidth, int yWidth);
+	MineManager( int topGap, int difficulty);
+	~MineManager();
 	void DrawMines();
 	void Draw();
 	void PressButton(int Index);
-	void RightClick(int Index);
+	void PressButton(int mouseX, int mouseY);
+	void RightClick(int mouseX, int mouseY);
 	void ClearNearby(int x, int y);
 	void DrawResetImage();
 	void CheckResetButtonPress(int x, int y);
@@ -34,6 +36,9 @@ protected:
 	bool firsClick = true;
 	Timer timer;
 	void DrawTimer();
+	int topGap;
+
+	float imageSizeMultiplyer = 1;
 
 	//textures to load in manager, so they are not loaded for every mine
 	Texture2D buttonImage;

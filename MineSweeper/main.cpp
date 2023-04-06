@@ -3,49 +3,51 @@
 #include "mineButton.h";
 #include "MineManager.h";
 
-void Update(MineManager* manager, int mineX, int mineY);
+void Update(MineManager* manager);
 void Draw(MineManager* manager);
+
+const int TOP_GAP = 124;
 
 int main()
 {
+	bool menu = false;
 	const int WINDOW_WIDTH = 1024;
 	const int WINDOW_HEIGHT = 1024;
 
-	int mineFieldWidth = 16;
-	int mineFieldHeight = 14;
+	const int EASY = 0;
+	const int MEDIUM = 1;
+	const int HARD = 2;
+
 
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "MineSweeper");
 
 	SetTargetFPS(60);
 	//SetUp MineManager
-	MineManager manager(mineFieldWidth, mineFieldHeight);
+	MineManager* manager = new MineManager(TOP_GAP, MEDIUM);
 
 	while (!WindowShouldClose())
 	{
-		Update(&manager, mineFieldWidth, mineFieldWidth);
-		Draw(&manager);
+		if (menu)
+		{
+			//ShowMenu
+			//create Manager
+			//manager = new MineManager(TOP_GAP, MEDIUM);
+		}
+		else
+		{
+			Update(manager);
+			Draw(manager);
+		}
 	}
 }
 
-void Update(MineManager* manager, int mineX, int mineY)
+void Update(MineManager* manager)
 {
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
 		Vector2 mousePos = GetMousePosition();
-		int rowIndex = 0;
-		//added due to clicking above the minesweeper game could still interact with tiles below within 1 tile.
-		if ((mousePos.y - (2 * 64)) > 0)
-		{
-			rowIndex = (mousePos.y - 2 * 64) / 64;
-		}
-		else
-		{
-			rowIndex = -1;
-		}
-		int colIndex = mousePos.x / 64;
 
-		int index = (rowIndex * mineX) + colIndex;
-		manager->PressButton(index);
+		manager->PressButton(mousePos.x, mousePos.y);
 
 		manager->CheckResetButtonPress(mousePos.x, mousePos.y);
 	}
@@ -60,11 +62,7 @@ void Update(MineManager* manager, int mineX, int mineY)
 	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
 	{
 		Vector2 mousePos = GetMousePosition();
-		int rowIndex = (mousePos.y - 2 * 64) / 64;
-		int colIndex = mousePos.x / 64;
-
-		int index = (rowIndex * mineX) + colIndex;
-		manager->RightClick(index);
+		manager->RightClick(mousePos.x, mousePos.y);
 	}
 }
 

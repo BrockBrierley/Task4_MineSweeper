@@ -6,6 +6,10 @@ mineButton::mineButton()
 	
 }
 
+mineButton::~mineButton()
+{
+}
+
 void mineButton::SetX(int xPos, int x)
 {
 	pos.x = xPos;
@@ -79,23 +83,23 @@ void mineButton::Explode()
 	//Play Sound
 }
 
-void mineButton::Draw(MineManager* manager)
+void mineButton::Draw(MineManager* manager, float imageSizeMultiplyer)
 {
 	if (mine && revealed)
 	{
-		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else if (flagged)
 	{
-		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else if (revealed)
 	{
-		DrawTextureEx(manager->GetImage(nearby), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetImage(nearby), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else
 	{
-		DrawTextureEx(manager->GetBasicButton(), pos, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(manager->GetBasicButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 }
 
