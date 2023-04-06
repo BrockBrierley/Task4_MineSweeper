@@ -66,6 +66,7 @@ MineManager::MineManager(int gap, int difficulty)
 	total = xSize * ySize;
 
 	winCount = total - numOfMines;
+	flagCounter = numOfMines;
 
 	mines = new mineButton[total];
 
@@ -122,6 +123,7 @@ void MineManager::CheckResetButtonRelease(int x, int y)
 void MineManager::Draw()
 {
 	DrawTimer();
+	DrawFlagCounter();
 	DrawResetImage();
 	DrawMines();
 }
@@ -131,7 +133,12 @@ void MineManager::DrawTimer()
 	DrawRectangle(10, 10, 400, 100, BLACK);
 	int currentTime = timer.GetTime();
 	DrawText(TextFormat("%05i", currentTime), 100, 17, 100, RED);
-	
+}
+
+void MineManager::DrawFlagCounter()
+{
+	DrawRectangle(624, 10, 400, 100, BLACK);
+	DrawText(TextFormat("%05i", flagCounter), 714, 17, 100, RED);
 }
 
 void MineManager::SetNearby()
@@ -346,7 +353,14 @@ void MineManager::RightClick(int mouseX, int mouseY)
 
 	if (index >= 0 && index < total && alive)
 	{
-		mines[index].Flag();
+		if (mines[index].Flag())
+		{
+			flagCounter--;
+		}
+		else
+		{
+			flagCounter++;
+		}
 	}
 }
 
@@ -420,6 +434,7 @@ void MineManager::Reset()
 	}
 	firsClick = true;
 	winCounter = 0;
+	flagCounter = numOfMines;
 	ArmBombs();
 	SetNearby();
 	timer.ResetTimer();

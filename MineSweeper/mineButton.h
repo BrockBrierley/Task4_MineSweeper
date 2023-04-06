@@ -7,7 +7,7 @@ public:
 	mineButton();
 	~mineButton();
 	bool Interact(class MineManager* manager);
-	void Flag();
+	bool Flag();
 	void ArmBomb();
 	void DisarmBomb();
 	void SetNearbyMines(int numOfMines);

@@ -36,10 +36,12 @@ protected:
 	bool firsClick = true;
 	Timer timer;
 	void DrawTimer();
+	void DrawFlagCounter();
 	int topGap;
 
 	int winCount = -1;
 	int winCounter = 0;
+	int flagCounter = 0;
 
 	float imageSizeMultiplyer = 1;
 

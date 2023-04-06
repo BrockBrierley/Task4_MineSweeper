@@ -7,10 +7,11 @@ void Update(MineManager* manager);
 void Draw(MineManager* manager);
 
 const int TOP_GAP = 124;
+bool menu = false;
 
 int main()
 {
-	bool menu = false;
+
 	const int WINDOW_WIDTH = 1024;
 	const int WINDOW_HEIGHT = 1024;
 
@@ -43,26 +44,33 @@ int main()
 
 void Update(MineManager* manager)
 {
-	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+	if (menu)
 	{
-		Vector2 mousePos = GetMousePosition();
 
-		manager->PressButton(mousePos.x, mousePos.y);
-
-		manager->CheckResetButtonPress(mousePos.x, mousePos.y);
 	}
-
-	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+	else
 	{
-		Vector2 mousePos = GetMousePosition();
-		manager->CheckResetButtonRelease(mousePos.x, mousePos.y);
-	}
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			Vector2 mousePos = GetMousePosition();
+
+			manager->PressButton(mousePos.x, mousePos.y);
+
+			manager->CheckResetButtonPress(mousePos.x, mousePos.y);
+		}
+
+		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			Vector2 mousePos = GetMousePosition();
+			manager->CheckResetButtonRelease(mousePos.x, mousePos.y);
+		}
 
 
-	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
-	{
-		Vector2 mousePos = GetMousePosition();
-		manager->RightClick(mousePos.x, mousePos.y);
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			Vector2 mousePos = GetMousePosition();
+			manager->RightClick(mousePos.x, mousePos.y);
+		}
 	}
 }
 

@@ -43,17 +43,19 @@ int mineButton::GetNearby()
 	return nearby;
 }
 
-void mineButton::Flag()
+bool mineButton::Flag()
 {
 	if (flagged)
 	{
 		flagged = false;
 		interactable = true;
+		return false;
 	}
 	else if (!flagged && interactable)
 	{
 		flagged = true;
 		interactable = false;
+		return true;
 	}
 }
 
