@@ -292,6 +292,8 @@ void MineManager::PressButton(int index)
 		else if(mines[index].IsMine() && !mines[index].IsFlagged())
 		{
 			alive = false;
+			mines[index].clickedSquare = true;
+			ShowAllMines();
 			timer.StopTimer();
 		}
 		else if (firsClick)
@@ -308,6 +310,17 @@ void MineManager::PressButton(int index)
 	if (alive && winCounter == winCount)
 	{
 		timer.StopTimer();
+	}
+}
+
+void MineManager::ShowAllMines()
+{
+	for (int i = 0; i < total; i++)
+	{
+		if (mines[i].IsMine())
+		{
+			mines[i].Interact(this);
+		}
 	}
 }
 
@@ -437,6 +450,11 @@ void MineManager::Reset()
 	ArmBombs();
 	SetNearby();
 	timer.ResetTimer();
+}
+
+bool MineManager::IsAlive()
+{
+	return alive;
 }
 
 MineManager::~MineManager()

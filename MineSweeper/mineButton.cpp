@@ -89,9 +89,17 @@ void mineButton::Explode()
 
 void mineButton::Draw(MineManager* manager, float imageSizeMultiplyer)
 {
-	if (mine && revealed)
+	if (mine && revealed && clickedSquare)
+	{
+		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, imageSizeMultiplyer, RED);
+	}
+	else if (mine && revealed)
 	{
 		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
+	}
+	else if (flagged && mine && !manager->IsAlive())
+	{
+		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, imageSizeMultiplyer, GREEN);
 	}
 	else if (flagged)
 	{
@@ -124,4 +132,5 @@ void mineButton::Reset()
 	nearby = 0;
 	interactable = true;
 	revealed = false;
+	clickedSquare = false;
 }

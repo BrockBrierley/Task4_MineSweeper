@@ -18,6 +18,7 @@ public:
 	bool IsMine();
 	bool IsFlagged();
 	void Reset();
+	bool clickedSquare = false;
 
 protected:
 	int nearby = 0;

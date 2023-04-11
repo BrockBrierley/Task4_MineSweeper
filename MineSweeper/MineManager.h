@@ -22,6 +22,8 @@ public:
 	Texture2D GetFlaggedButton();
 	Texture2D GetBombedButton();
 	void ArmBombs();
+	void ShowAllMines();
+	bool IsAlive();
 protected:
 	void SetNearby();
 	void Reset();

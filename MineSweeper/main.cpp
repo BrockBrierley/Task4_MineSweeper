@@ -4,6 +4,10 @@
 #include "MineManager.h";
 #include "Menu.h";
 
+
+//To do
+//Add in explosion sounds
+
 void Update(MineManager* manager);
 void Update(Menu* menu);
 void Draw(MineManager* manager);
@@ -24,7 +28,7 @@ int main()
 
 	SetTargetFPS(60);
 	//SetUp MineManager
-	MineManager* manager = nullptr;// = new MineManager(TOP_GAP, MEDIUM);
+	MineManager* manager = nullptr;
 	Menu* menu = new Menu();
 
 	while (!WindowShouldClose())
