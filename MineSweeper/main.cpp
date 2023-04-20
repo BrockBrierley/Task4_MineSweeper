@@ -7,6 +7,9 @@
 
 //To do
 //Add in explosion sounds
+//create sound manager
+//create image manager
+//create applicaiton object
 
 void Update(MineManager* manager);
 void Update(Menu* menu);
