@@ -8,7 +8,6 @@
 
 
 //To do
-//Add in Clicking sound
 //create applicaiton object
 //unload all images and sounds and anything else required in the deconstructors
 //comment everything
@@ -36,7 +35,7 @@ int main()
 	SetTargetFPS(60);
 	//SetUp MineManager
 	MineManager* manager = nullptr;
-	Menu* menu = new Menu(imageManager);
+	Menu* menu = new Menu(imageManager, soundManager);
 
 	while (!WindowShouldClose())
 	{
@@ -80,6 +79,11 @@ void Update(MineManager* manager)
 	{
 		Vector2 mousePos = GetMousePosition();
 		manager->RightClick(mousePos.x, mousePos.y);
+	}
+
+	if (IsMouseButtonReleased(MOUSE_RIGHT_BUTTON))
+	{
+		manager->rightClickRelease();
 	}
 }
 

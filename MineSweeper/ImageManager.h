@@ -12,6 +12,9 @@ public:
 	Texture2D GetAliveResetImage(bool clicked);
 	Texture2D GetDeadResetImage(bool clicked);
 
+	//plainFlag
+	Texture2D GetFlag();
+
 	//Menu Get Methods
 	Texture2D GetTitle();
 	Texture2D GetEasy(bool clicked);
@@ -26,6 +29,9 @@ private:
 	Texture2D buttonImage;
 	Texture2D FlaggedImage;
 	Texture2D BombedImage;
+
+	//flag image used in the falg counter
+	Texture2D flag;
 
 	//Number Buttons
 	Texture2D EmptyImage;

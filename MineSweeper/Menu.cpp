@@ -1,8 +1,9 @@
 #include "Menu.h"
 
-Menu::Menu(ImageManager* iM)
+Menu::Menu(ImageManager* iM, SoundManager* sm)
 {
 	imageManager = iM;
+	soundManager = sm;
 }
 
 Menu::~Menu()
@@ -46,14 +47,17 @@ void Menu::click(int mouseX, int mouseY)
 {
 	if (mouseX > easyPos.x && mouseX < easyPos.x + 600 && mouseY > easyPos.y && mouseY < easyPos.y +200)
 	{
+		soundManager->PlayClickIn();
 		easyClicked = true;
 	}
 	else if (mouseX > mediumPos.x && mouseX < mediumPos.x + 600 && mouseY > mediumPos.y && mouseY < mediumPos.y + 200)
 	{
+		soundManager->PlayClickIn();
 		mediumClicked = true;
 	}
 	else if (mouseX > hardPos.x && mouseX < hardPos.x + 600 && mouseY > hardPos.y && mouseY < hardPos.y + 200)
 	{
+		soundManager->PlayClickIn();
 		hardClicked = true;
 	}
 }
@@ -73,6 +77,11 @@ int Menu::release(int mouseX, int mouseY)
 	{
 		difficulty = 2;
 	}
+	if (easyClicked || mediumClicked || hardClicked)
+	{
+		soundManager->PlayClickOut();
+	}
+
 	easyClicked = false;
 	mediumClicked = false;
 	hardClicked = false;

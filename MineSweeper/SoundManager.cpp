@@ -6,12 +6,15 @@ SoundManager::SoundManager()
 	LoadSounds();
 }
 
+SoundManager::~SoundManager()
+{
+}
+
 void SoundManager::LoadSounds()
 {
-	std::cout << "Soundsloaded";
 	explosion = LoadSound("ArtAssets/Explosion.wav");
-	//clickIn = LoadSound("ArtAssets/clickIn.wav");
-	//clickOut = LoadSound("ArtAssets/clickOut.wav");
+	clickIn = LoadSound("ArtAssets/clickIn.wav");
+	clickOut = LoadSound("ArtAssets/clickOut.wav");
 }
 
 void SoundManager::PlayExplosion()
@@ -21,10 +24,10 @@ void SoundManager::PlayExplosion()
 
 void SoundManager::PlayClickIn()
 {
-	//PlaySound(clickIn);
+	PlaySound(clickIn);
 }
 
 void SoundManager::PlayClickOut()
 {
-	//PlaySound(clickOut);
+	PlaySound(clickOut);
 }

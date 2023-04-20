@@ -19,6 +19,9 @@ void ImageManager::LoadImages()
 	FlaggedImage = LoadTexture("ArtAssets/Flagged_Button.png");
 	BombedImage = LoadTexture("ArtAssets/Bomb_Button.png");
 
+	//flag image without the button
+	flag = LoadTexture("ArtAssets/flag.png");
+
 	//Load Number Images
 	EmptyImage = LoadTexture("ArtAssets/Empty_Pressed_Button.png");
 	OneImage = LoadTexture("ArtAssets/1_Button.png");
@@ -115,6 +118,11 @@ Texture2D ImageManager::GetDeadResetImage(bool clicked)
 	{
 		return ResetImage_Dead_Unpressed;
 	}
+}
+
+Texture2D ImageManager::GetFlag()
+{
+	return flag;
 }
 
 Texture2D ImageManager::GetTitle()

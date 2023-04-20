@@ -15,6 +15,7 @@ public:
 	void PressButton(int Index);
 	void PressButton(int mouseX, int mouseY);
 	void RightClick(int mouseX, int mouseY);
+	void rightClickRelease();
 	void ClearNearby(int x, int y);
 	void DrawResetImage();
 	void CheckResetButtonPress(int x, int y);
@@ -52,5 +53,7 @@ protected:
 	Texture2D resetImage;
 
 private:
+	bool leftCLicked = false;
+	bool rightClicked = false;
 };
 

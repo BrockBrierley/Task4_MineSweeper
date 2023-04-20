@@ -77,6 +77,8 @@ void MineManager::CheckResetButtonPress(int x, int y)
 {
 	if (x > (1024 / 2) - 32 && x < (1024 / 2) + 32 && y > 10 && y < 64)
 	{
+		soundManager->PlayClickIn();
+		leftCLicked = true;
 		if (alive)
 		{
 			resetImage = imageManager->GetAliveResetImage(true);
@@ -91,6 +93,11 @@ void MineManager::CheckResetButtonPress(int x, int y)
 
 void MineManager::CheckResetButtonRelease(int x, int y)
 {
+	if (leftCLicked)
+	{
+		leftCLicked = false;
+		soundManager->PlayClickOut();
+	}
 	if (alive)
 	{
 		resetImage = imageManager->GetAliveResetImage(false);
@@ -125,6 +132,8 @@ void MineManager::DrawFlagCounter()
 {
 	DrawRectangle(624, 10, 400, 100, BLACK);
 	DrawText(TextFormat("%05i", flagCounter), 714, 17, 100, RED);
+	Vector2 flagPos = { 605, 0 };
+	DrawTextureEx(imageManager->GetFlag(), flagPos, 0, 2, WHITE);
 }
 
 void MineManager::SetNearby()
@@ -264,6 +273,18 @@ void MineManager::DrawMines()
 	}
 }
 
+
+void MineManager::ShowAllMines()
+{
+	for (int i = 0; i < total; i++)
+	{
+		if (mines[i].IsMine())
+		{
+			mines[i].Interact(this);
+		}
+	}
+}
+
 void MineManager::PressButton(int index)
 {
 	if (index >= 0 && index < total && alive)
@@ -275,7 +296,7 @@ void MineManager::PressButton(int index)
 			mines[0].ArmBomb();
 			SetNearby();
 		}
-		else if(mines[index].IsMine() && !mines[index].IsFlagged())
+		else if (mines[index].IsMine() && !mines[index].IsFlagged())
 		{
 			alive = false;
 			mines[index].clickedSquare = true;
@@ -300,17 +321,6 @@ void MineManager::PressButton(int index)
 	}
 }
 
-void MineManager::ShowAllMines()
-{
-	for (int i = 0; i < total; i++)
-	{
-		if (mines[i].IsMine())
-		{
-			mines[i].Interact(this);
-		}
-	}
-}
-
 void MineManager::PressButton(int mouseX, int mouseY)
 {
 	int rowIndex = 0;
@@ -318,6 +328,8 @@ void MineManager::PressButton(int mouseX, int mouseY)
 	if ((mouseY - (topGap)) > 0)
 	{
 		rowIndex = (mouseY - topGap) / buttonSize;
+		soundManager->PlayClickIn();
+		leftCLicked = true;
 	}
 	else
 	{
@@ -339,6 +351,8 @@ void MineManager::RightClick(int mouseX, int mouseY)
 	if ((mouseY - (topGap)) > 0)
 	{
 		rowIndex = (mouseY - topGap) / buttonSize;
+		soundManager->PlayClickIn();
+		rightClicked = true;
 	}
 	else
 	{
@@ -361,6 +375,15 @@ void MineManager::RightClick(int mouseX, int mouseY)
 		{
 			flagCounter++;
 		}
+	}
+}
+
+void MineManager::rightClickRelease()
+{
+	if (rightClicked)
+	{
+		rightClicked = false;
+		soundManager->PlayClickOut();
 	}
 }
 

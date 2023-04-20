@@ -1,11 +1,12 @@
 #pragma once
 #include <raylib.h>
 #include "ImageManager.h"
+#include "SoundManager.h"
 
 class Menu
 {
 public:
-	Menu(ImageManager* iM);
+	Menu(ImageManager* iM, SoundManager* sm);
 	~Menu();
 	void Draw();
 	void click(int mouseX, int mousY);
@@ -23,5 +24,6 @@ private:
 	Vector2 hardPos = {212,700};
 
 	ImageManager* imageManager;
+	SoundManager* soundManager;
 };
 
