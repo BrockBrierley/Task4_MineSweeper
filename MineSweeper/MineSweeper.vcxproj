@@ -131,11 +131,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="mineButton.cpp" />
     <ClCompile Include="MineManager.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="mineButton.h" />
     <ClInclude Include="MineManager.h" />
     <ClInclude Include="Timer.h" />

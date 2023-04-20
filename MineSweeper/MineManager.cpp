@@ -7,7 +7,7 @@ MineManager::MineManager(int gap, int difficulty)
 	//set the number of mines
 	if (difficulty == 0)
 	{
-		numOfMines = 3;
+		numOfMines = 8;
 		xSize = 8;
 		ySize = 7;
 		buttonSize *= 2;
@@ -22,7 +22,7 @@ MineManager::MineManager(int gap, int difficulty)
 	}
 	else if (difficulty == 2)
 	{
-		numOfMines = 60;
+		numOfMines = 150;
 		xSize = 32;
 		ySize = 28;
 		buttonSize /= 2;
@@ -292,6 +292,8 @@ void MineManager::PressButton(int index)
 		else if(mines[index].IsMine() && !mines[index].IsFlagged())
 		{
 			alive = false;
+			mines[index].clickedSquare = true;
+			ShowAllMines();
 			timer.StopTimer();
 		}
 		else if (firsClick)
@@ -308,6 +310,17 @@ void MineManager::PressButton(int index)
 	if (alive && winCounter == winCount)
 	{
 		timer.StopTimer();
+	}
+}
+
+void MineManager::ShowAllMines()
+{
+	for (int i = 0; i < total; i++)
+	{
+		if (mines[i].IsMine())
+		{
+			mines[i].Interact(this);
+		}
 	}
 }
 
@@ -437,6 +450,11 @@ void MineManager::Reset()
 	ArmBombs();
 	SetNearby();
 	timer.ResetTimer();
+}
+
+bool MineManager::IsAlive()
+{
+	return alive;
 }
 
 MineManager::~MineManager()
