@@ -1,23 +1,17 @@
 #pragma once
 #include <raylib.h>
+#include "ImageManager.h"
 
 class Menu
 {
 public:
-	Menu();
+	Menu(ImageManager* iM);
 	~Menu();
 	void Draw();
 	void click(int mouseX, int mousY);
 	int release(int mouseX, int mouseY);
 protected:
 private:
-	Texture2D Title;
-	Texture2D easyUnpressed;
-	Texture2D easyPressed;
-	Texture2D mediumUnpressed;
-	Texture2D mediumPressed;
-	Texture2D hardUnpressed;
-	Texture2D hardPressed;
 
 	bool easyClicked = false;
 	bool mediumClicked = false;
@@ -27,5 +21,7 @@ private:
 	Vector2 easyPos = {212, 200};
 	Vector2 mediumPos = {212, 450};
 	Vector2 hardPos = {212,700};
+
+	ImageManager* imageManager;
 };
 

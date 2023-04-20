@@ -3,13 +3,15 @@
 #include "mineButton.h";
 #include "MineManager.h";
 #include "Menu.h";
+#include "SoundManager.h";
+#include "ImageManager.h";
 
 
 //To do
-//Add in explosion sounds
-//create sound manager
-//create image manager
+//Add in Clicking sound
 //create applicaiton object
+//unload all images and sounds and anything else required in the deconstructors
+//comment everything
 
 void Update(MineManager* manager);
 void Update(Menu* menu);
@@ -22,17 +24,19 @@ int difficulty = 1;
 
 int main()
 {
-
 	const int WINDOW_WIDTH = 1024;
 	const int WINDOW_HEIGHT = 1024;
 
-
+	
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "MineSweeper");
+	InitAudioDevice();
+	SoundManager* soundManager = new SoundManager();
+	ImageManager* imageManager = new ImageManager();
 
 	SetTargetFPS(60);
 	//SetUp MineManager
 	MineManager* manager = nullptr;
-	Menu* menu = new Menu();
+	Menu* menu = new Menu(imageManager);
 
 	while (!WindowShouldClose())
 	{
@@ -43,7 +47,7 @@ int main()
 		}
 		else if (!menuActive && manager == nullptr)
 		{
-			manager = new MineManager(TOP_GAP, difficulty);
+			manager = new MineManager(TOP_GAP, difficulty, soundManager, imageManager);
 		}
 		else
 		{

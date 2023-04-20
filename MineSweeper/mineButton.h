@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "ImageManager.h"
 
 class mineButton
 {
@@ -7,7 +8,7 @@ public:
 	mineButton();
 	~mineButton();
 	bool Interact(class MineManager* manager);
-	bool Flag();
+	int Flag();
 	void ArmBomb();
 	void DisarmBomb();
 	void SetNearbyMines(int numOfMines);
@@ -20,16 +21,18 @@ public:
 	void Reset();
 	bool clickedSquare = false;
 
+	void SetImageManager(ImageManager* im);
+
 protected:
 	int nearby = 0;
 	bool mine = false;
 	bool revealed = false;
-	void Explode();
 	bool interactable = true;
 	bool flagged = false;
 	int xArrayPos = 0;
 	int yArrayPos = 0;
 	Vector2 pos;
 private:
+	ImageManager* imageManager;
 };
 

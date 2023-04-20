@@ -3,7 +3,6 @@
 
 mineButton::mineButton()
 {
-	
 }
 
 mineButton::~mineButton()
@@ -43,19 +42,23 @@ int mineButton::GetNearby()
 	return nearby;
 }
 
-bool mineButton::Flag()
+int mineButton::Flag()
 {
 	if (flagged)
 	{
 		flagged = false;
 		interactable = true;
-		return false;
+		return 0;
 	}
 	else if (!flagged && interactable)
 	{
 		flagged = true;
 		interactable = false;
-		return true;
+		return 1;
+	}
+	else
+	{
+		return -1;
 	}
 }
 
@@ -68,7 +71,6 @@ bool mineButton::Interact(MineManager* manager)
 
 		if (mine)
 		{
-			Explode();
 			return false;
 		}
 		else
@@ -82,36 +84,34 @@ bool mineButton::Interact(MineManager* manager)
 	}
 }
 
-void mineButton::Explode() 
-{
-	//Play Sound
-}
-
 void mineButton::Draw(MineManager* manager, float imageSizeMultiplyer)
 {
+	int normal = 0;
+	int flag = 1;
+	int bomb = 2;
 	if (mine && revealed && clickedSquare)
 	{
-		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, imageSizeMultiplyer, RED);
+		DrawTextureEx(imageManager->GetBasicButton(bomb), pos, 0.0f, imageSizeMultiplyer, RED);
 	}
 	else if (mine && revealed)
 	{
-		DrawTextureEx(manager->GetBombedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
+		DrawTextureEx(imageManager->GetBasicButton(bomb), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else if (flagged && mine && !manager->IsAlive())
 	{
-		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, imageSizeMultiplyer, GREEN);
+		DrawTextureEx(imageManager->GetBasicButton(flag), pos, 0.0f, imageSizeMultiplyer, GREEN);
 	}
 	else if (flagged)
 	{
-		DrawTextureEx(manager->GetFlaggedButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
+		DrawTextureEx(imageManager->GetBasicButton(flag), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else if (revealed)
 	{
-		DrawTextureEx(manager->GetImage(nearby), pos, 0.0f, imageSizeMultiplyer, WHITE);
+		DrawTextureEx(imageManager->GetNumberedButton(nearby), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 	else
 	{
-		DrawTextureEx(manager->GetBasicButton(), pos, 0.0f, imageSizeMultiplyer, WHITE);
+		DrawTextureEx(imageManager->GetBasicButton(normal), pos, 0.0f, imageSizeMultiplyer, WHITE);
 	}
 }
 
@@ -134,3 +134,9 @@ void mineButton::Reset()
 	revealed = false;
 	clickedSquare = false;
 }
+
+void mineButton::SetImageManager(ImageManager* im)
+{
+	imageManager = im;
+}
+

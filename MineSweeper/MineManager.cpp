@@ -1,8 +1,10 @@
 #include "MineManager.h"
 #include <iostream>
 
-MineManager::MineManager(int gap, int difficulty)
+MineManager::MineManager(int gap, int difficulty, SoundManager* sm, ImageManager* im)
 {
+	soundManager = sm;
+	imageManager = im;
 	topGap = gap;
 	//set the number of mines
 	if (difficulty == 0)
@@ -36,30 +38,13 @@ MineManager::MineManager(int gap, int difficulty)
 		ySize = 14;
 	}
 
-	//load Basic Images
-	buttonImage = LoadTexture("ArtAssets/Unknown_Unpressed_Button.png");
-	FlaggedImage = LoadTexture("ArtAssets/Flagged_Button.png");
-	BombedImage = LoadTexture("ArtAssets/Bomb_Button.png");
-
-	//Load Number Images
-	EmptyImage = LoadTexture("ArtAssets/Empty_Pressed_Button.png");
-	OneImage = LoadTexture("ArtAssets/1_Button.png");
-	TwoImage = LoadTexture("ArtAssets/2_Button.png");
-	ThreeImage = LoadTexture("ArtAssets/3_Button.png");
-	FourImage = LoadTexture("ArtAssets/4_Button.png");
-	FiveImage = LoadTexture("ArtAssets/5_Button.png");
-	SixImage = LoadTexture("ArtAssets/6_Button.png");
-	SevenImage = LoadTexture("ArtAssets/7_Button.png");
-	EightImage = LoadTexture("ArtAssets/8_Button.png");
-
 	//LoadResetButton Images
+	//ResetImage_Alive_Unpressed = LoadTexture("ArtAssets/HappyUnpressed.png");
+	//ResetImage_Alive_Pressed = LoadTexture("ArtAssets/HappyPressed.png");
+	//ResetImage_Dead_Unpressed = LoadTexture("ArtAssets/DeadUnpressed.png");
+	//ResetImage_Dead_Pressed = LoadTexture("ArtAssets/DeadPressed.png");
 
-	ResetImage_Alive_Unpressed = LoadTexture("ArtAssets/HappyUnpressed.png");;
-	ResetImage_Alive_Pressed = LoadTexture("ArtAssets/HappyPressed.png");;
-	ResetImage_Dead_Unpressed = LoadTexture("ArtAssets/DeadUnpressed.png");;
-	ResetImage_Dead_Pressed = LoadTexture("ArtAssets/DeadPressed.png");;
-
-	resetImage = &ResetImage_Alive_Unpressed;
+	resetImage = imageManager->GetAliveResetImage(false);
 	resetPos.x = ((1024 / 2) - 32);
 	resetPos.y = 10;
 
@@ -72,6 +57,7 @@ MineManager::MineManager(int gap, int difficulty)
 
 	for (int i = 0; i < total; i++)
 	{
+		mines[i].SetImageManager(imageManager);
 		mines[i].SetX( ((i % xSize)*buttonSize), i % xSize);
 		mines[i].SetY( ((i / xSize)*buttonSize) + topGap, i / xSize);
 	}
@@ -84,7 +70,7 @@ MineManager::MineManager(int gap, int difficulty)
 
 void MineManager::DrawResetImage()
 {
-	DrawTextureEx((*resetImage), resetPos, 0.0f, 1.0f, WHITE);
+	DrawTextureEx(resetImage, resetPos, 0.0f, 1.0f, WHITE);
 }
 
 void MineManager::CheckResetButtonPress(int x, int y)
@@ -93,11 +79,11 @@ void MineManager::CheckResetButtonPress(int x, int y)
 	{
 		if (alive)
 		{
-			resetImage = &ResetImage_Alive_Pressed;
+			resetImage = imageManager->GetAliveResetImage(true);
 		}
 		else
 		{
-			resetImage = &ResetImage_Dead_Pressed;
+			resetImage = imageManager->GetDeadResetImage(true);
 		}
 
 	}
@@ -107,11 +93,11 @@ void MineManager::CheckResetButtonRelease(int x, int y)
 {
 	if (alive)
 	{
-		resetImage = &ResetImage_Alive_Unpressed;
+		resetImage = imageManager->GetAliveResetImage(false);
 	}
 	else
 	{
-		resetImage = &ResetImage_Dead_Unpressed;
+		resetImage = imageManager->GetDeadResetImage(false);
 	}
 
 	if (x > (1024 / 2) - 32 && x < (1024 / 2) + 32 && y > 0 && y < 64)
@@ -293,6 +279,7 @@ void MineManager::PressButton(int index)
 		{
 			alive = false;
 			mines[index].clickedSquare = true;
+			soundManager->PlayExplosion();
 			ShowAllMines();
 			timer.StopTimer();
 		}
@@ -365,59 +352,18 @@ void MineManager::RightClick(int mouseX, int mouseY)
 
 	if (index >= 0 && index < total && alive)
 	{
-		if (mines[index].Flag())
+		int flagged = mines[index].Flag();
+		if (flagged == 1)
 		{
 			flagCounter--;
 		}
-		else
+		else if (flagged == 0)
 		{
 			flagCounter++;
 		}
 	}
 }
 
-Texture2D MineManager::GetImage(int number)
-{
-	switch (number)
-	{
-	case 0:
-		return EmptyImage;
-	case 1:
-		return OneImage;
-	case 2:
-		return TwoImage;
-	case 3:
-		return ThreeImage;
-	case 4:
-		return FourImage;
-	case 5:
-		return FiveImage;
-	case 6:
-		return SixImage;
-	case 7:
-		return SevenImage;
-	case 8:
-		return EightImage;
-	default:
-		break;
-	}
-	return buttonImage;
-}
-
-Texture2D MineManager::GetBasicButton()
-{
-	return buttonImage;
-}
-
-Texture2D MineManager::GetFlaggedButton()
-{
-	return FlaggedImage;
-}
-
-Texture2D MineManager::GetBombedButton()
-{
-	return BombedImage;
-}
 
 void MineManager::ArmBombs()
 {
@@ -438,7 +384,7 @@ void MineManager::ArmBombs()
 
 void MineManager::Reset()
 {
-	resetImage = &ResetImage_Alive_Unpressed;
+	resetImage = imageManager->GetAliveResetImage(false);
 	alive = true;
 	for (int i = 0; i < total; i++)
 	{
