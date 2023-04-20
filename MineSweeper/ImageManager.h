@@ -4,25 +4,29 @@
 class ImageManager
 {
 public:
+	//constructor and deconstructor
 	ImageManager();
 	~ImageManager();
-	//basic game Get Methods
+
+	//basic game Get image methods
 	Texture2D GetNumberedButton(int number);
 	Texture2D GetBasicButton(int number);
 	Texture2D GetAliveResetImage(bool clicked);
 	Texture2D GetDeadResetImage(bool clicked);
 
-	//plainFlag
+	//plain flag image getter
 	Texture2D GetFlag();
 
-	//Menu Get Methods
+	//Menu image getter methods
 	Texture2D GetTitle();
 	Texture2D GetEasy(bool clicked);
 	Texture2D GetMed(bool clicked);
 	Texture2D GetHard(bool clicked);
 protected:
 private:
+	//load images called in the constructor
 	void LoadImages();
+
 	/////Image variables
 	//Game Images
 	//Basic buttons
