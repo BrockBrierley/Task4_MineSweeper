@@ -605,8 +605,7 @@ bool MineManager::IsAlive()
 
 MineManager::~MineManager()
 {
-	//delete the mines array pointer
-	delete(mines);
+
 }
 
 
