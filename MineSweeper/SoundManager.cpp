@@ -8,6 +8,9 @@ SoundManager::SoundManager()
 
 SoundManager::~SoundManager()
 {
+	UnloadSound(explosion);
+	UnloadSound(clickIn);
+	UnloadSound(clickOut);
 }
 
 void SoundManager::LoadSounds()

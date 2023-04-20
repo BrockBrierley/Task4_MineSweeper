@@ -8,7 +8,41 @@ ImageManager::ImageManager()
 
 ImageManager::~ImageManager()
 {
-	
+	////Load Game Images
+	//load Basic Images
+	UnloadTexture(buttonImage);
+	UnloadTexture(FlaggedImage);
+	UnloadTexture(BombedImage);
+
+	//flag image without the button
+	UnloadTexture(flag);
+
+	//Load Number Images
+	UnloadTexture(EmptyImage);
+	UnloadTexture(OneImage);
+	UnloadTexture(TwoImage);
+	UnloadTexture(ThreeImage);
+	UnloadTexture(FourImage);
+	UnloadTexture(FiveImage);
+	UnloadTexture(SixImage);
+	UnloadTexture(SevenImage);
+	UnloadTexture(EightImage);
+
+	//LoadResetButton Images
+	UnloadTexture(ResetImage_Alive_Unpressed);
+	UnloadTexture(ResetImage_Alive_Pressed);
+	UnloadTexture(ResetImage_Dead_Unpressed);
+	UnloadTexture(ResetImage_Dead_Pressed);
+
+
+	////Load Menu Images
+	UnloadTexture(title);
+	UnloadTexture(easyPressed);
+	UnloadTexture(easyUnpressed);
+	UnloadTexture(mediumUnpressed);
+	UnloadTexture(mediumPressed);
+	UnloadTexture(hardUnpressed);
+	UnloadTexture(hardPressed);
 }
 
 void ImageManager::LoadImages()

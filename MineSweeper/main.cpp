@@ -6,12 +6,6 @@
 #include "SoundManager.h";
 #include "ImageManager.h";
 
-
-//To do
-//create applicaiton object
-//unload all images and sounds and anything else required in the deconstructors
-//comment everything
-
 void Update(MineManager* manager);
 void Update(Menu* menu);
 void Draw(MineManager* manager);
@@ -54,6 +48,9 @@ int main()
 			Draw(manager);
 		}
 	}
+	delete (manager);
+	delete (soundManager);
+	delete (imageManager);
 }
 
 void Update(MineManager* manager)
